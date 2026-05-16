@@ -7,7 +7,8 @@
 function calculateSimpleRevenue(purchase, _product) {
     // @TODO: Расчет выручки от операции
     const { discount = 1 - (purchase.discount / 100), sale_price, quantity } = purchase;
-    return sale_price * quantity * discount;
+    const discountCoefficient = 1 - (discount / 100);
+    return sale_price * quantity * discountCoefficient;
 }
 
 /**
@@ -23,7 +24,7 @@ function calculateBonusByProfit(index, total, seller) {
     if (index === 0) {
         return seller.profit * 0.15;
     } else if (index === 1 || index === 2) {
-        return seller.profit * 0.01;
+        return seller.profit * 0.10;
     } else if (index === total - 1) {
         return 0;
     } else {
@@ -39,14 +40,15 @@ function calculateBonusByProfit(index, total, seller) {
  */
 function analyzeSalesData(data, options) {
     // @TODO: Проверка входных данных
-    if (!data
-    || !Array.isArray(data.product)
-    || !Array.isArray(data.purchase_records)
-    || data.sellers.length === 0 
-    || data.products.length === 0 
-    || data.purchase_records.length
+    if (
+    !data ||
+    !Array.isArray(data.products) ||
+    !Array.isArray(data.purchase_records) ||
+    data.sellers.length === 0 ||
+    data.products.length === 0 ||
+    data.purchase_records.length === 0
     ) {
-        throw new error('Некорректные входные данные')
+        throw new Error('Некорректные входные данные');
     };
     // @TODO: Проверка наличия опций
     if (!options || typeof options !== 'object') {
@@ -132,3 +134,4 @@ function analyzeSalesData(data, options) {
         bonus: +seller.bonus.toFixed(2)
     }));
 }
+
