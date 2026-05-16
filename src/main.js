@@ -6,7 +6,7 @@
  */
 function calculateSimpleRevenue(purchase, _product) {
     // @TODO: Расчет выручки от операции
-    const { discount = 1 - (purchase.discount / 100), sale_price, quantity } = purchase;
+    const { discount, sale_price, quantity } = purchase;
     const discountCoefficient = 1 - (discount / 100);
     return sale_price * quantity * discountCoefficient;
 }
@@ -93,7 +93,6 @@ function analyzeSalesData(data, options) {
         record.items.forEach(items => {
             totalAmount += items.quantity * items.sale_price;
         });
-        seller.revenue += totalAmount;
 
         record.items.forEach(item => {
             const product = productIndex[item.sku];
