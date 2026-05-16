@@ -39,10 +39,8 @@ function calculateBonusByProfit(index, total, seller) {
  */
 function analyzeSalesData(data, options) {
     // @TODO: Проверка входных данных
-    if (!data
-        || !Array.isArray(data.sellers)
-        || data.sellers.length === 0
-    ) {
+    if (!data.purchase_records 
+        || !Array.isArray(data.purchase_records)) {
         throw new error('Некорректные входные данные')
     };
     // @TODO: Проверка наличия опций
@@ -102,7 +100,7 @@ function analyzeSalesData(data, options) {
     });
 
     // @TODO: Сортировка продавцов по прибыли
-    const sellerStatsSorted = sellerStats.toSorted((left, right) => right.profit - left.profit);
+    const sellerStatsSorted = sellerStats.sort((left, right) => right.profit - left.profit);
 
     // @TODO: Назначение премий на основе ранжирования
     sellerStatsSorted.forEach((seller, index) => {
